@@ -4,11 +4,10 @@ import styles from "./SoldOut.style";
 
 const SoldOut = (props) => {
 
-
   return (
-    <View style={styles.container}>
+    <View style={props.isFocus ? styles.containerActive : styles.container}>
       <TouchableOpacity onPress={props.onPress}>
-        <Text style={styles.container_text}>{props.title}</Text>
+        <Text style={props.isFocus ? styles.container_text_Active : styles.container_text}>{props.title}</Text>
       </TouchableOpacity>
     </View>
   );

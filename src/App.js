@@ -1,4 +1,4 @@
-import React, { useState } from "expo-status-bar";
+import React, { useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView, FlatList } from "react-native";
 import SearchBar from "./components/SearchBar";
 import SongCard from "./components/SongCard";
@@ -6,16 +6,23 @@ import SoldOut from "./components/SoldOut";
 import music_data from "./music-data.json";
 
 export default function App() {
-
   const [list, setList] = useState(music_data);
 
   function showOnlySoldOut() {
     setList(music_data.filter((sold) => sold.isSoldOut));
+    setFocusSold(!focusSold);
+    setFocusAll(focusSold);
   }
+
+  const [focusSold, setFocusSold] = useState(false);
 
   function showAll() {
     setList(music_data);
+    setFocusAll(!focusAll);
+    setFocusSold(focusAll);
   }
+
+  const [focusAll, setFocusAll] = useState(true);
 
   const renderItem = ({ item }) => <SongCard song={item} />;
   const renderSeperatorItem = <View style={styles.seperator}></View>;
@@ -30,8 +37,12 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <SearchBar onSearch={handleSearch} />
       <View style={styles.filter_container}>
-        <SoldOut title="Hepsi" onPress={showAll} />
-        <SoldOut title="Tükenenler" onPress={showOnlySoldOut} />
+        <SoldOut title="Hepsi" onPress={showAll} isFocus={focusAll} />
+        <SoldOut
+          title="Tükenenler"
+          onPress={showOnlySoldOut}
+          isFocus={focusSold}
+        />
       </View>
       <FlatList
         data={list}
