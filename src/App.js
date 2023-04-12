@@ -32,6 +32,7 @@ export default function App() {
       const currentTitle = song.title.toLowerCase();
       return currentTitle.indexOf(searchedText) > -1;
     });
+    setList(filteredList);
   };
   return (
     <SafeAreaView style={styles.container}>
